@@ -14,6 +14,10 @@ namespace Transporte.Web.Data
 
         }
 
+        public DbSet<Afiliado> Afiliados { get; set; }
+
         public DbSet<Sindicato> Sindicatos { get; set; }
+
+        public DbSet<Vehiculo> Vehiculos { get; set; }
     }
 }

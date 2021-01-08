@@ -43,6 +43,64 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="AddAfiliado" asp-route-id="@Model.Id" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Afiliado</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a>
+    <a asp-action="Index" class="btn btn-success">Volver a Lista</a>
 </div>
+<hr />
+
+@if (Model.Afiliados.Count == 0)
+{
+    <h5>No existen afiliados registrados.</h5>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Properties</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Afiliados.FirstOrDefault().Nombres)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Afiliados.FirstOrDefault().Apellidos)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Afiliados.FirstOrDefault().Foto)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Afiliados)
+                            {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nombres)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Apellidos)
+                                </td>
+                                <td>
+                                    <img src="@Url.Content(item.Foto)" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;" />
+                                </td>
+                                <td>
+                                    <a asp-action="EditAfili" asp-route-id="@item.Id">Edit</a> |
+                                    <a asp-action="DetailsAfili" asp-route-id="@item.Id">Details</a> |
+                                    <a asp-action="DeleteAfili" asp-route-id="@item.Id">Delete</a>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
