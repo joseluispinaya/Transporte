@@ -1,0 +1,85 @@
+﻿@model Transporte.Web.Data.Entities.Afiliado
+
+@{
+    ViewData["Title"] = "Buscar";
+}
+
+<h2>Buscar Afiliado</h2>
+<hr />
+
+@*@using (Html.BeginForm("Mybusqueda", "Sindicatoes", FormMethod.Post))
+    {
+        <div>
+            @Html.TextBox("texto", "", new { @class = "form-control" })
+            <button type="submit" class="btn btn-default">Buscar</button>
+        </div>
+    }*@
+
+@using (Html.BeginForm("Mybusqueda", "Sindicatoes", FormMethod.Post))
+{
+    <div class="form-inline">
+        <div class="form-group mb-2">
+            <label>INGRESE NRO C.I.</label>
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+            @Html.TextBox("texto", "", new { @class = "form-control" })
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+    </div>
+}
+
+<hr />
+@if (Model != null)
+{
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header text-center">
+                <h3>Informacion de Afiliado</h3> 
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Nombres)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Nombres)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Apellidos)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Apellidos)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Celular)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Celular)
+                            </dd>
+                            <dt>
+                                Sindicato
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Sindicato.Nomsindica)
+                            </dd>
+                        </dl>
+                    </div>
+
+                    <div class="col-xs-3">
+                        <img src="@Url.Content(Model.Foto)" alt="Image" style="width:80px;height:80px;border-radius:50%" />
+                    </div>
+
+                    <div class="col-xs-3">
+                        <img src="@Url.Content(Model.Imgqr)" alt="Image" style="width:80px;height:80px" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+

@@ -66,13 +66,17 @@ else
                         <thead>
                             <tr>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Afiliados.FirstOrDefault().Nombres)
+                                    Afiliado
+                                    @*@Html.DisplayNameFor(model => model.Afiliados.FirstOrDefault().Nombres)*@
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Afiliados.FirstOrDefault().Apellidos)
+                                    @Html.DisplayNameFor(model => model.Afiliados.FirstOrDefault().Celular)
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Afiliados.FirstOrDefault().Foto)
+                                </th>
+                                <th>
+                                    Codigo QR
                                 </th>
                                 <th></th>
                             </tr>
@@ -82,17 +86,20 @@ else
                             {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Nombres)
+                                    @Html.DisplayFor(modelItem => item.FullName)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Apellidos)
+                                    @Html.DisplayFor(modelItem => item.Celular)
                                 </td>
                                 <td>
-                                    <img src="@Url.Content(item.Foto)" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;" />
+                                    <img src="@Url.Content(item.Foto)" alt="Image" style="width:80px;height:80px;border-radius:50%" />
                                 </td>
                                 <td>
-                                    <a asp-action="EditAfili" asp-route-id="@item.Id">Edit</a> |
-                                    <a asp-action="DetailsAfili" asp-route-id="@item.Id">Details</a> |
+                                    <img src="@Url.Content(item.Imgqr)" alt="Image" style="width:70px;height:70px" />
+                                </td>
+                                <td>
+                                    <a asp-action="EditProperty" class="btn btn-warning" asp-route-id="@item.Id"><i class="glyphicon glyphicon-pencil"></i> </a>
+                                    <a asp-action="DetailsAfili" class="btn btn-primary" asp-route-id="@item.Id"><i class="glyphicon glyphicon-list"> </i> </a>
                                     <a asp-action="DeleteAfili" asp-route-id="@item.Id">Delete</a>
                                 </td>
                             </tr>

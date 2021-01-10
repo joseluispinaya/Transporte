@@ -41,5 +41,7 @@ namespace Transporte.Web.Data.Entities
 
         public Sindicato Sindicato { get; set; }
         public ICollection<Vehiculo> Vehiculos { get; set; }
+
+        public string FullName => $"{Nombres} {Apellidos}";
     }
 }

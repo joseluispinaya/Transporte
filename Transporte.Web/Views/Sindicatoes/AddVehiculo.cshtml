@@ -1,0 +1,48 @@
+﻿@model Transporte.Web.Models.VehiculoViewModel
+
+@{ ViewData["Title"] = "Create"; }
+
+<h2>Create</h2>
+
+<h4>Property</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddVehiculo">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AfiliadoId" />
+
+            <div class="form-group">
+                <label asp-for="Nroplaca" class="control-label"></label>
+                <input asp-for="Nroplaca" class="form-control" />
+                <span asp-validation-for="Nroplaca" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Nrochasis" class="control-label"></label>
+                <input asp-for="Nrochasis" class="form-control" />
+                <span asp-validation-for="Nrochasis" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Nromotor" class="control-label"></label>
+                <input asp-for="Nromotor" class="form-control" />
+                <span asp-validation-for="Nromotor" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Marca" class="control-label"></label>
+                <input asp-for="Marca" class="form-control" />
+                <span asp-validation-for="Marca" class="text-danger"></span>
+            </div>
+
+
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="DetailsAfili" asp-route-id="@Model.AfiliadoId" class="btn btn-success">Back to Afili</a>
+            </div>
+        </form>
+    </div>
+</div>

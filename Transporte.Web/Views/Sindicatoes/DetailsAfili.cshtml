@@ -1,0 +1,134 @@
+﻿@model Transporte.Web.Data.Entities.Afiliado
+
+@{
+    ViewData["Title"] = "Detalles";
+}
+
+<h2>Afiliado</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Informacion Personal</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Nombres)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Nombres)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Apellidos)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Apellidos)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Celular)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Celular)
+                            </dd>
+                            <dt>
+                                Sindicato
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Sindicato.Nomsindica)
+                            </dd>
+                            <dt>
+                                Vehiculos
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Vehiculos.Count)
+                            </dd>
+                        </dl>
+                    </div>
+
+                    <div class="col-xs-3">
+                        <img src="@Url.Content(Model.Foto)" alt="Image" style="width:80px;height:80px;border-radius:50%" />
+                    </div>
+
+                    <div class="col-xs-3">
+                        <img src="@Url.Content(Model.Imgqr)" alt="Image" style="width:70px;height:70px" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="EditProperty" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+    <a asp-action="AddVehiculo" asp-route-id="@Model.Id" class="btn btn-primary">Agregar Vehiculo</a>
+    <a asp-action="Details" asp-route-id="@Model.Sindicato.Id" class="btn btn-success">Back to Owner</a>
+</div>
+
+<hr />
+
+@if (Model.Vehiculos.Count == 0)
+{
+    <h5>No existen vehiculos registrados.</h5>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Vehiculos</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Vehiculos.FirstOrDefault().Nroplaca)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Vehiculos.FirstOrDefault().Nrochasis)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Vehiculos.FirstOrDefault().Nromotor)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Vehiculos.FirstOrDefault().Marca)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Vehiculos)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nroplaca)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nrochasis)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nromotor)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Marca)
+                                    </td>
+                                    <td>
+                                        <a asp-action="EditVehiculo" class="btn btn-warning" asp-route-id="@item.Id"><i class="glyphicon glyphicon-pencil"></i> </a>
+                                        <a asp-action="Detailsvehiculo" class="btn btn-primary" asp-route-id="@item.Id"><i class="glyphicon glyphicon-list"> </i> </a>
+                                        <a asp-action="DeleteVehiculo" asp-route-id="@item.Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
