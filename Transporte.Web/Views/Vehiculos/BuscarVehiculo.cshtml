@@ -1,0 +1,98 @@
+﻿@model Transporte.Web.Data.Entities.Vehiculo
+
+@{
+    ViewData["Title"] = "Buscar";
+}
+
+<h2>Buscar Vehiculo</h2>
+<hr />
+
+
+
+@using (Html.BeginForm("BuscarVehiculo", "Vehiculos", FormMethod.Post))
+{
+    <div class="form-inline">
+        <div class="form-group mb-2">
+            <label>INGRESE NRO PLACA</label>
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+            @Html.TextBox("texto", "", new { @class = "form-control" })
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+    </div>
+}
+
+<hr />
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Resutado de la Busqueda</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Nrochasis)
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.Nrochasis)
+                                </dd>
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Nromotor)
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.Nromotor)
+                                </dd>
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Marca)
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.Marca)
+                                </dd>
+
+                            </dl>
+                        </div>
+
+                        <div class="col-xs-4">
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Afiliado.Nombres)
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.Afiliado.Nombres)
+                                </dd>
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Afiliado.Apellidos)
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.Afiliado.Apellidos)
+                                </dd>
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Afiliado.Celular)
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.Afiliado.Celular)
+                                </dd>
+
+                            </dl>
+
+                        </div>
+
+                        <div class="col-xs-4">
+                            <img src="@Url.Content(Model.Afiliado.Foto)" alt="Image" style="width:80px;height:80px;border-radius:50%" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Reportedato" asp-route-id="@Model.Id" class="btn btn-warning">Imprimir</a>
+        <a asp-action="AddAlerta" asp-route-id="@Model.Id" class="btn btn-primary">Alerta</a>
+    </div>
+}

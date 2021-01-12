@@ -19,5 +19,14 @@ namespace Transporte.Web.Data
         public DbSet<Sindicato> Sindicatos { get; set; }
 
         public DbSet<Vehiculo> Vehiculos { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Vehiculo>()
+                .HasIndex(t => t.Nroplaca)
+                .IsUnique();
+        }
     }
 }

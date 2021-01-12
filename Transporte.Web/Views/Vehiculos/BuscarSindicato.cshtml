@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Transporte.Web.Data.Entities.Sindicato>
+
+@{
+    ViewData["Title"] = "Detalle";
+}
+
+<h2>Buscar Sindicato</h2>
+<hr />
+
+@using (Html.BeginForm("BuscarSindicato", "Vehiculos", FormMethod.Post))
+{
+    <div class="form-inline">
+        <div class="form-group mb-2">
+            <label>INGRESE NRO PLACA</label>
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+            @Html.TextBox("texto", "", new { @class = "form-control" })
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+    </div>
+}
+<hr />
+
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Properties</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Sindicato
+                                </th>
+                                <th>
+                                    Responsable
+                                </th>
+                                <th>
+                                    Contacto
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nomsindica)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Responsable)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Celular)
+                                    </td>
+                                    <td>
+                                        <a asp-action="EditProperty" class="btn btn-warning" asp-route-id="@item.Id"><i class="glyphicon glyphicon-pencil"></i> </a>
+                                        <a asp-action="DetailsAfili" class="btn btn-primary" asp-route-id="@item.Id"><i class="glyphicon glyphicon-list"> </i> </a>
+                                        <a asp-action="DeleteAfili" asp-route-id="@item.Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

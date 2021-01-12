@@ -310,8 +310,25 @@ namespace Transporte.Web.Controllers
             {
                 var vehi = await ToVehiculoAsync(model, true);
                 _context.Vehiculos.Add(vehi);
-                await _context.SaveChangesAsync();
-                return RedirectToAction($"DetailsAfili/{model.AfiliadoId}");
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction($"DetailsAfili/{model.AfiliadoId}");
+                }
+                catch (Exception ex)
+                {
+                    if (ex.InnerException.Message.Contains("duplicada"))
+                    {
+                        ModelState.AddModelError(string.Empty, "El numero de placa ya existe.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, ex.InnerException.Message);
+                    }
+                }
+
+               
             }
             return View(model);
         }
@@ -320,7 +337,7 @@ namespace Transporte.Web.Controllers
         {
             return new Vehiculo
             {
-                Nroplaca = model.Nroplaca,
+                Nroplaca = model.Nroplaca.ToUpper(),
                 Nrochasis = model.Nrochasis,
                 Nromotor = model.Nromotor,
                 Marca = model.Marca,
