@@ -1,0 +1,124 @@
+﻿@model IEnumerable<Transporte.Web.Data.Entities.Admin>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<link href="https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css" rel="stylesheet" />
+<br />
+
+<p>
+    <a asp-action="Create" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Crear Nuevo</a>
+</p>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Administradores Registrados</h3>
+            </div>
+            <div class="panel-body">
+                <table class="display nowrap" style="width:100%" id="MyTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().User.NroDocumento)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().User.Nombres)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().User.Apellidos)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().User.Direccion)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().User.Email)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().User.PhoneNumber)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.NroDocumento)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.Nombres)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.Apellidos)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.Direccion)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.PhoneNumber)
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" class="btn btn-primary" asp-route-id="@item.Id"><i class="glyphicon glyphicon-pencil"></i> </a>
+                                    <a asp-action="Details" class="btn btn-warning" asp-route-id="@item.Id"><i class="glyphicon glyphicon-list"> </i> </a>
+                                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id"><i class="glyphicon glyphicon-trash"> </i> </a>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript">
+        var idioma = {
+            "processing": "Procesando...",
+            "lengthMenu": "Mostrar _MENU_ registros",
+            "zeroRecords": "No se encontraron resultados",
+            "emptyTable": "Ningún dato disponible en esta tabla",
+            "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "search": "Buscar:",
+            "infoThousands": ",",
+            "loadingRecords": "Cargando...",
+            "paginate": {
+                "first": "Primero",
+                "last": "Último",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            },
+            "aria": {
+                "sortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sortDescending": ": Activar para ordenar la columna de manera descendente"
+            },
+            "buttons": {
+                "copy": "Copiar",
+                "colvis": "Visibilidad"
+            }
+        }
+        $(document).ready(function () {
+            $('#MyTable').DataTable({
+
+                destroy: true,
+                responsive: true,
+                "language": idioma
+            });
+
+        });
+    </script>
+}

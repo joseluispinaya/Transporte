@@ -33,10 +33,43 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    <li><a asp-area="" asp-controller="Sindicatoes" asp-action="Index">Sindicatos</a></li>
-                    <li><a asp-area="" asp-controller="Sindicatoes" asp-action="Mybusqueda">Buscar</a></li>
-                    <li><a asp-area="" asp-controller="Vehiculos" asp-action="BuscarVehiculo">Buscar Vehiculo</a></li>
-                    <li><a asp-area="" asp-controller="Vehiculos" asp-action="BuscarSindicato">Buscar Sindicato</a></li>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Manager"))
+                    {
+                        <li><a asp-area="" asp-controller="Managers" asp-action="Index">Managers</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Busquedas<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="" asp-controller="Sindicatoes" asp-action="Mybusqueda">Buscar Afiliado</a></li>
+                                <li><a asp-area="" asp-controller="Vehiculos" asp-action="BuscarVehiculo">Buscar Vehiculo</a></li>
+                                <li><a asp-area="" asp-controller="Vehiculos" asp-action="BuscarSindicato">Buscar Sindicato</a></li>
+                            </ul>
+                        </li>
+                        <li><a asp-area="" asp-controller="Sindicatoes" asp-action="Index">Sindicatos</a></li>
+
+                    }
+
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="" asp-controller="Admins" asp-action="Index">Administradores</a></li>
+                                <li><a asp-area="" asp-controller="Vehiculos" asp-action="BuscarVehiculo">Secretarias</a></li>
+                            </ul>
+                        </li>
+                        <li><a asp-area="" asp-controller="Sindicatoes" asp-action="Index">Sindicatos</a></li>
+                    }
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a asp-area="" asp-controller="Account" asp-action="ChangeUser">@User.Identity.Name</a></li>
+                        <li><a asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                    }
+                    else
+                    {
+                        <li><a asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
+                    }
                 </ul>
             </div>
         </div>

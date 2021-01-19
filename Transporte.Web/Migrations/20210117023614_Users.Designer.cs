@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Transporte.Web.Data;
 
 namespace Transporte.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210117023614_Users")]
+    partial class Users
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -252,6 +254,10 @@ namespace Transporte.Web.Migrations
                     b.Property<string>("Apellidos")
                         .IsRequired()
                         .HasMaxLength(50);
+
+                    b.Property<string>("Celular")
+                        .IsRequired()
+                        .HasMaxLength(10);
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();

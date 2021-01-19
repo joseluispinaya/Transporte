@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using Transporte.Web.Data.Entities;
 
 namespace Transporte.Web.Controllers
 {
+    [Authorize(Roles = "Manager")]
     public class VehiculosController : Controller
     {
         private readonly DataContext _context;
