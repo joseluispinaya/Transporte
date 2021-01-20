@@ -4,6 +4,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +38,81 @@ namespace Transporte.Web.Controllers
             return View(_context.Sindicatos
                 .Include(o => o.Afiliados));
         }
+
+        //public async Task<IActionResult> Reporte(int? id)
+        public IActionResult Reporte()
+        {
+            iTextSharp.text.Document doc = new iTextSharp.text.Document(iTextSharp.text.PageSize.Letter);
+            doc.SetMargins(40f, 40f, 40f, 40f);
+            MemoryStream ms = new MemoryStream();
+            PdfWriter writer = PdfWriter.GetInstance(doc, ms);
+
+            doc.AddAuthor("CodeStack");
+            doc.AddTitle("Reporte Afiliados");
+            doc.Open();
+
+            // Estilos de letra colores 
+            BaseFont helvetica = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1250, true);
+
+            iTextSharp.text.Font titulo = new iTextSharp.text.Font(helvetica, 30f, iTextSharp.text.Font.BOLD, new iTextSharp.text.BaseColor(0, 0, 0));
+            iTextSharp.text.Font texto_blanco = new iTextSharp.text.Font(helvetica, 10f, iTextSharp.text.Font.BOLD, new iTextSharp.text.BaseColor(255, 255, 255));
+
+            iTextSharp.text.Font subtitulo = new iTextSharp.text.Font(helvetica, 12f, iTextSharp.text.Font.BOLD, new iTextSharp.text.BaseColor(0, 0, 0));
+
+            iTextSharp.text.Font negrita = new iTextSharp.text.Font(helvetica, 9f, iTextSharp.text.Font.BOLD, new iTextSharp.text.BaseColor(0, 0, 0));
+
+            iTextSharp.text.Font parrafo = new iTextSharp.text.Font(helvetica, 10f, iTextSharp.text.Font.NORMAL, new iTextSharp.text.BaseColor(0, 0, 0));
+
+            iTextSharp.text.Font detalle = new iTextSharp.text.Font(helvetica, 15f, iTextSharp.text.Font.BOLD, new iTextSharp.text.BaseColor(255, 255, 255));
+            // Fin de Estilos de letra colores 
+
+            doc.Add(iTextSharp.text.Chunk.Newline);
+            iTextSharp.text.Chunk barra = new iTextSharp.text.Chunk(new iTextSharp.text.pdf.draw.LineSeparator(5f, 30f, new iTextSharp.text.BaseColor(0, 69, 161), iTextSharp.text.Element.ALIGN_RIGHT, -1));
+            doc.Add(barra);
+            doc.Add(new iTextSharp.text.Phrase(" "));
+
+            var path = Path.Combine(
+                Directory.GetCurrentDirectory(),
+                "wwwroot\\images",
+                "gopher_head-min.png");
+
+            iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance(path);
+            logo.ScaleAbsolute(100, 50);
+
+            var tbl = new PdfPTable(new float[] { 40f, 60f }) { WidthPercentage = 100 };
+            //tbl.AddCell(new PdfPCell(new iTextSharp.text.Phrase("EMI UA RIB", titulo)) { Border = 0, Rowspan = 3, VerticalAlignment = iTextSharp.text.Element.ALIGN_MIDDLE });
+            tbl.AddCell(new PdfPCell(logo) { Border = 0, Rowspan = 3, HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER });
+            tbl.AddCell(new PdfPCell(new iTextSharp.text.Phrase("CALLE PLACIDO MOLINA Y PLACIDO MENDEZ, RIBERALTA", parrafo)) { Border = 0, HorizontalAlignment = iTextSharp.text.Element.ALIGN_RIGHT });
+            tbl.AddCell(new PdfPCell(new iTextSharp.text.Phrase("+(591) 71299860 FedeRib@gmail.com", parrafo)) { Border = 0, HorizontalAlignment = iTextSharp.text.Element.ALIGN_RIGHT });
+            tbl.AddCell(new PdfPCell(new iTextSharp.text.Phrase(DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), parrafo)) { Border = 0, HorizontalAlignment = iTextSharp.text.Element.ALIGN_RIGHT });
+
+            doc.Add(tbl);
+            doc.Add(new iTextSharp.text.Phrase(" "));
+            //var ruta = Path.Combine("/images/", "gopher_head-min.png");
+            //var ruta = Path.Combine("/images/", "gopher_head-min.png");
+
+            //iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance(ruta);
+            //iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance(Path.Combine(env.WebRootPath, "images", "gopher_head-min.png"));
+            doc.Add(new Phrase("REPORTE SINDICATOS"));
+
+            writer.Close();
+            doc.Close();
+            ms.Seek(0, SeekOrigin.Begin);
+            return File(ms, "application/pdf");
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //var sindicato = await _context.Sindicatos
+            //    .Include(a => a.Afiliados)
+            //    .FirstOrDefaultAsync(m => m.Id == id);
+            //if (sindicato == null)
+            //{
+            //    return NotFound();
+            //}
+        }
+
         // GET: Sindicatoes/Details/5
         //public async Task<IActionResult> Details(int? id)
         //{
@@ -119,7 +196,7 @@ namespace Transporte.Web.Controllers
             Bitmap qrCodeImage = qrCode.GetGraphic(20, Color.Black, Color.White, null, 15,6,false);
 
             var bitmapBytes = BitmapToBytesCode(qrCodeImage);
-            string rutaqr = UploadimgArray(bitmapBytes, "Afiqr");
+            var rutaqr = UploadimgArray(bitmapBytes, "Afiqr");
 
             return new Afiliado
             {
